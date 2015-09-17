@@ -1,0 +1,2 @@
+include README.rst
+recursive-include ckanext/drupal_menu_sync *.html *.json *.js *.less *.css

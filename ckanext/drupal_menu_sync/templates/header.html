@@ -1,0 +1,16 @@
+{% set menus = h.drupal_menu_get('main') %}
+{% set current_url = h.full_current_url().split('?')[0][:-1] %}
+
+{% ckan_extends %}
+
+{% block header_site_navigation_tabs %}
+  {% if menus %}
+    {% for link in menus %}
+      <li class="{{ 'active' if link.0 == current_url else '' }}" >
+        <a href="{{ link.0 }}">{{ link.1 }}</a>
+      </li>
+    {% endfor %}
+  {% else %}
+    {{ super() }}
+  {% endif %}
+{% endblock %}
