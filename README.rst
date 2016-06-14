@@ -8,6 +8,10 @@ Document any optional config settings here. For example::
 
    ckan.plugins = drupal_menu_sync
 
+In Drupal site need to be enabled custom module::
+	
+   menu_export 
+
 ------------------------
 Development Installation
 ------------------------

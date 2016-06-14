@@ -2,13 +2,17 @@
 
 {% ckan_extends %}
 
+{% set header_menu = h.menu_links('main') %}
 {% block header_site_navigation %}
-  <nav class="section navigation">
-    <ul class="nav nav-pills">
-	  {% set header_menu = h.menu_links('main') %}
-	  {% for item in header_menu %}
-	    <li class="{{ 'active' if (item['link'] == current_url or item['link'] == '<front>') else '' }}"><a href="{{ '/' if item['link'] == '<front>' else item['link']}}">{{item['title']}}</a></li>
-	  {% endfor %}
-	</ul>
-  </nav>
+	{% if header_menu != None  %}
+		<nav class="section navigation">
+			<ul class="nav nav-pills">
+				{% for item in header_menu %}
+					<li class="{{ 'active' if (item['link'] == current_url or item['link'] == '<front>') else '' }}"><a href="{{ '/' if item['link'] == '<front>' else item['link']}}">{{item['title']}}</a></li>
+				{% endfor %}
+			</ul>
+		</nav>
+	{% else %}
+		{{ super() }}
+	{% endif %}
 {% endblock %}

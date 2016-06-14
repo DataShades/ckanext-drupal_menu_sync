@@ -9,21 +9,14 @@ import logging
 import json
 import re
 from ckan.common import _, g
+import ckan.lib.helpers as h
 
 log = logging.getLogger(__name__)
 
 def menu_links(section=None):
-    # Drupal URL is the root of the domain without the slash
     drupal_url = config.get('drupal.site_url')
-    # fallback links
-    json_str = '[{"title":"Home","link":"'+drupal_url+'"},' \
-               '{"title":"Datasets","link":"'+drupal_url+'/data/dataset"},' \
-               '{"title":"Organisations","link":"'+drupal_url+'/data/organization"},' \
-               '{"title":"Groups","link":"'+drupal_url+'/data/group"},' \
-               '{"title":"Strategies","link":"'+drupal_url+'/strategies"},' \
-               '{"title":"Toolkit","link":"'+drupal_url+'/toolkit"},' \
-               '{"title":"Apps & Ideas","link":"'+drupal_url+'/data/showcase"}]'
-    links = json.loads(json_str)
+    if drupal_url == None or drupal_url == h.full_current_url().split('?')[0][:-1]:
+      return None
     # request links from Drupal
     r = None
     section_menu = []
@@ -37,17 +30,21 @@ def menu_links(section=None):
         log.error(e.message)
 
     if r:
-        links = r.json()
-    if section:
-      for item in links[section]:
-        section_menu.append(item)
-      return section_menu  
-    return links
+      links = r.json()
+    else:
+      return None
+    if links:
+      if section in links.keys():
+        for item in links[section]:
+          section_menu.append(item)
+        return section_menu
+      else:
+        return None
 
 class Drupal_Menu_SyncPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IConfigurer)
     plugins.implements(plugins.ITemplateHelpers)
-    
+
     # IConfigurer
     def update_config(self, config_):
         toolkit.add_template_directory(config_, 'templates')
