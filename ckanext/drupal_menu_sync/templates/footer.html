@@ -1,0 +1,10 @@
+{% ckan_extends %}
+
+{% block footer_nav %}
+  <ul class="unstyled">
+  	{% set footer_menu = h.menu_links('footer') %}
+  	{% for item in footer_menu %}
+	  <li><a href="{{item['link']}}">{{item['title']}}</a></li>
+	{% endfor %}
+  </ul>
+{% endblock %}
