@@ -6,6 +6,8 @@ Document any optional config settings here. For example::
 
    drupal.site_url = {Drupal instance URL - ckan instance root by default}
 
+   ckan.plugins = drupal_menu_sync
+
 ------------------------
 Development Installation
 ------------------------
