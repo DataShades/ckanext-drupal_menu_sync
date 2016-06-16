@@ -13,6 +13,7 @@ import ckan.lib.helpers as h
 
 log = logging.getLogger(__name__)
 
+@beaker_cache(expire=3600)
 def menu_links(section=None):
     drupal_url = config.get('drupal.site_url')
     if drupal_url == None or drupal_url == h.full_current_url().split('?')[0][:-1]:
