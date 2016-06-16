@@ -34,9 +34,8 @@ def menu_links(section=None):
     else:
       return None
     if links:
-      if section in links.keys():
-        for item in links[section]:
-          section_menu.append(item)
+      if section in links:
+        section_menu.extend(links[section])
         return section_menu
       else:
         return None
