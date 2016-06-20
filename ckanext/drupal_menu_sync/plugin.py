@@ -36,6 +36,10 @@ def menu_links(section=None):
       return None
     if links:
       if section in links:
+        if section == 'main':
+            for item in links[section]:
+                if item['link'] == '<front>':
+                    item['link'] = drupal_url
         section_menu.extend(links[section])
         return section_menu
       else:
