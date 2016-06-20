@@ -1,0 +1,6 @@
+name = menu_export
+description = test proof of concept module
+package = public-action
+version = VERSION
+core = 7.x
+files[] = menu_export.module
