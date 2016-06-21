@@ -8,11 +8,7 @@
 		<nav class="section navigation">
 			<ul class="nav nav-pills">
 				{% for item in header_menu %}
-					{% if item['link'].startswith('http') or item['link'].startswith('/') %}
-						<li class="{{ 'active' if (item['link'] == current_url) else '' }}"><a href="{{ item['link'] }}">{{item['title']}}</a></li>
-					{% else %}
-						<li class="{{ 'active' if (item['link'] == current_url) else '' }}"><a href="/{{ item['link'] }}">{{item['title']}}</a></li>
-					{% endif %}	
+					<li class="{{ 'active' if (item['link'] == current_url) else '' }}"><a href="{{ '/' if not(item['link'].startswith('http') or item['link'].startswith('/')) }}{{ item['link'] }}">{{item['title']}}</a></li>
 				{% endfor %}
 			</ul>
 		</nav>
