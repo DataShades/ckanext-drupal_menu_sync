@@ -5,7 +5,7 @@
 	{% if footer_menu != None %}
 		<ul class="unstyled">
 			{% for item in footer_menu %}
-				{% if item['link'].startwith('http') or item['link'].startwith('/') %}
+				{% if item['link'].startswith('http') or item['link'].startswith('/') %}
 					<li><a href="{{ item['link'] }}">{{item['title']}}</a></li>
 				{% else %}
 					<li><a href="/{{ item['link'] }}">{{item['title']}}</a></li>
