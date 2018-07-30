@@ -1,12 +1,42 @@
-{% set current_url = h.full_current_url().split('?')[0] %}
-
 {% ckan_extends %}
 
-{% set header_menu = h.menu_links('main') %}
-{% block header_site_navigation %}
-	{% if header_menu != None  %}
-		{{ header_menu|safe }}
-	{% else %}
-		{{ super() }}
-	{% endif %}
+{% block header_wrapper %}
+  {% block header_account %}
+    {{ super() }}
+  {% endblock %}
+  <header class="navbar navbar-static-top masthead">
+    {% block header_debug %}
+      {{ super() }}
+    {% endblock %}
+    <div class="container">
+      <hgroup class="{{ g.header_class }} pull-left">
+        {% block header_logo %}
+          {{ super() }}
+        {% endblock %}
+      </hgroup>
+      {% set header_menu = h.menu_links('main') %}
+      {% if header_menu != None  %}
+        {{ header_menu|safe }}
+      {% else %}
+        <div class="nav-collapse collapse">
+          <nav class="section navigation">
+            <ul class="nav nav-pills">
+              {% block header_site_navigation_tabs %}
+                {{ h.build_nav_main(
+                  ('search', _('Datasets')),
+                  ('organizations_index', _('Organizations')),
+                  ('group_index', _('Groups')),
+                  ('about', _('About'))
+                ) }}
+              {% endblock %}
+            </ul>
+          </nav>
+        </div>
+      {% endif %}
+
+      {% block header_site_search %}
+        {{ super() }}
+      {% endblock %}
+    </div>
+  </header>
 {% endblock %}
