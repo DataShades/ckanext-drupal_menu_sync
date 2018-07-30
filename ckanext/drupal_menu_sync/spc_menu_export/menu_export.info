@@ -1,5 +1,5 @@
-name = menu_export
-description = test proof of concept module
+name = SPC Menu Export
+description = Export menus
 package = public-action
 version = VERSION
 core = 7.x

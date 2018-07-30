@@ -14,11 +14,9 @@ function say_hello_world() {
     $menu_main = menu_build_tree('main-menu');
     $menu_footer = menu_build_tree('menu-footer-menu');
     $output = Array();
-    foreach ($menu_main as $menu_item) {
-        $alias = drupal_lookup_path('alias', $menu_item['link']['link_path']);
-        $url = $alias ? $alias : $menu_item['link']['link_path'];
-    	$output['main'][] = Array('title' => $menu_item['link']['title'], 'link' => $url);
-	}
+    
+    $output['main'] = create_main_menu();
+
     foreach ($menu_footer as $menu_item) {
         $alias = drupal_lookup_path('alias', $menu_item['link']['link_path']);
         $url = $alias ? $alias : $menu_item['link']['link_path'];

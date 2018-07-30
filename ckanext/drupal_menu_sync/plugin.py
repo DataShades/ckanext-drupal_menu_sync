@@ -31,17 +31,17 @@ def menu_links(section=None):
         log.error(e.message)
 
     if r:
-      links = r.json()
+      menus = r.json()
     else:
       return None
-    if links:
-      if section in links:
+
+    if menus:
+      if section in menus:
         if section == 'main':
-            for item in links[section]:
-                if item['link'] == '<front>':
-                    item['link'] = drupal_url
-        section_menu.extend(links[section])
-        return section_menu
+            return menus['main'][0]
+        else: 
+            section_menu.extend(links[section])
+            return section_menu
       else:
         return None
 
