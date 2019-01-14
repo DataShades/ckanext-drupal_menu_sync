@@ -57,16 +57,11 @@ class Drupal_Menu_SyncPlugin(plugins.SingletonPlugin):
 
     def before_map(self, map):
         map.connect(
-            'manage_cache',
-            '/ckan-admin/manage-cache',
-            controller='ckanext.drupal_menu_sync.controller:MainController',
+            'drupal_menu_sync_admin',
+            '/ckan-admin/drupal_menu_sync_admin',
+            controller='ckanext.drupal_menu_sync.controller:SyncAdmController',
             action='manage_cache',
             ckan_icon='file-text'
-        )
-        map.connect(
-            '/ckan-admin/clear-cache',
-            controller='ckanext.drupal_menu_sync.controller:MainController',
-            action='clear_cache'
         )
         return map
 
@@ -75,6 +70,9 @@ class Drupal_Menu_SyncPlugin(plugins.SingletonPlugin):
         toolkit.add_template_directory(config_, 'templates')
         toolkit.add_public_directory(config_, 'public')
         toolkit.add_resource('fanstatic', 'drupal_menu_sync')
+        toolkit.add_ckan_admin_tab(
+            config_, 'drupal_menu_sync_admin', 'Manage Menu sync'
+        )
 
     # ITemplateHelpers
     def get_helpers(self):
