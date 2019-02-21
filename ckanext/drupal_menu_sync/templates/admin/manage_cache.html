@@ -1,0 +1,26 @@
+{% extends "admin/base.html" %} 
+
+{% block primary_content_inner %}
+  <p>Clear cache for the <b>main</b> (top) menu</p>
+  <form method="POST" id="clear-main-menu-cache">
+      <button
+        type="submit"
+        name="clear-main-menu-cache"
+        value="clear_cache"
+        class="btn btn-primary"
+        >Clear cache</button>
+    </form>
+  <hr />
+{% endblock %} 
+
+{% block secondary_content %}
+<div class="module module-narrow module-shallow">
+  <h2 class="module-heading">
+    <i class="fa fa-info-circle"></i>
+    {{ _('Menu synchronization') }}
+  </h2>
+  <div class="module-content">
+    Here is you can manage menu synchronization with Drupal
+  </div>
+</div>
+{% endblock %}
