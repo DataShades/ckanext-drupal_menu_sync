@@ -2,13 +2,17 @@
 
 {% set footer_menu = h.menu_links('footer') %}
 {% block footer_nav %}
-	{% if footer_menu != None %}
-		<ul class="unstyled">
-			{% for item in footer_menu %}
-				<li><a href="{{ '/' if not(item['link'].startswith('http') or item['link'].startswith('/')) }}{{ item['link'] }}">{{item['title']}}</a></li>
-			{% endfor %}
-		</ul>
-	{% else %}
-		{{ super() }}
-	{% endif %}
+    {% if footer_menu != None %}
+	<ul class="unstyled">
+	    {% for item in footer_menu %}
+		<li>
+                    <a href="{{ '/' if not(item['link'].startswith('http') or item['link'].startswith('/')) }}{{ item['link'] }}">
+                        {{item['title']}}
+                    </a>
+                </li>
+	    {% endfor %}
+	</ul>
+    {% else %}
+	{{ super() }}
+    {% endif %}
 {% endblock %}

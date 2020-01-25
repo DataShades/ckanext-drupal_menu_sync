@@ -4,15 +4,19 @@
 
 {% set header_menu = h.menu_links('main') %}
 {% block header_site_navigation %}
-	{% if header_menu != None  %}
-		<nav class="section navigation">
-			<ul class="nav nav-pills">
-				{% for item in header_menu %}
-					<li class="{{ 'active' if (item['link'] == current_url) else '' }}"><a href="{{ '/' if not(item['link'].startswith('http') or item['link'].startswith('/')) }}{{ item['link'] }}">{{item['title']}}</a></li>
-				{% endfor %}
-			</ul>
-		</nav>
-	{% else %}
-		{{ super() }}
-	{% endif %}
+    {% if header_menu != None  %}
+	<nav class="section navigation">
+	    <ul class="nav nav-pills">
+		{% for item in header_menu %}
+		    <li class="{{ 'active' if (item['link'] == current_url) else '' }}">
+                        <a href="{{ '/' if not(item['link'].startswith('http') or item['link'].startswith('/')) }}{{ item['link'] }}">
+                            {{item['title']}}
+                        </a>
+                    </li>
+		{% endfor %}
+	    </ul>
+	</nav>
+    {% else %}
+	{{ super() }}
+    {% endif %}
 {% endblock %}
