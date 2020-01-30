@@ -1,68 +1,21 @@
-import requests
-import logging
-
-from pylons import config
-from beaker.cache import CacheManager
+from ckantoolkit import config
 
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
-import ckan.lib.helpers as h
 
-log = logging.getLogger(__name__)
-cache = CacheManager()
-
-
-@cache.cache('main_menu', expire=3600)
-def menu_links(section=None):
-    drupal_url = config.get('drupal.site_url')
-    if drupal_url is None or (
-        drupal_url == h.full_current_url().split('?')[0][:-1]
-    ):
-        return None
-    # request links from Drupal
-    r = None
-    section_menu = []
-    try:
-        r = requests.get(drupal_url + '/menu_export', verify=False, timeout=10)
-    except requests.exceptions.Timeout:
-        log.warning(drupal_url + '/menu_export connection timeout')
-    except requests.exceptions.TooManyRedirects:
-        log.warning(drupal_url + '/menu_export too many redirects')
-    except requests.exceptions.RequestException as e:
-        log.error(e.message)
-
-    if r:
-        menus = r.json()
-    else:
-        return None
-
-    if menus:
-        if section in menus:
-            if section == 'main':
-                return menus['main'][0]
-            else: 
-                section_menu.extend(menus[section])
-                return section_menu
-        else:
-            return None
+from ckanext.drupal_menu_sync.views import blueprints
+from ckanext.drupal_menu_sync.helpers import helpers
 
 
 class Drupal_Menu_SyncPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IConfigurer)
     plugins.implements(plugins.ITemplateHelpers)
-    plugins.implements(plugins.IRoutes, inherit=True)
+    plugins.implements(plugins.IBlueprint)
 
-    # IRoutes
 
-    def before_map(self, map):
-        map.connect(
-            'drupal_menu_sync_admin',
-            '/ckan-admin/drupal_menu_sync_admin',
-            controller='ckanext.drupal_menu_sync.controller:SyncAdmController',
-            action='manage_cache',
-            ckan_icon='file-text'
-        )
-        return map
+    # IBlueprint
+    def get_blueprint(self):
+        return blueprints
 
     # IConfigurer
     def update_config(self, config_):
@@ -70,11 +23,9 @@ class Drupal_Menu_SyncPlugin(plugins.SingletonPlugin):
         toolkit.add_public_directory(config_, 'public')
         toolkit.add_resource('fanstatic', 'drupal_menu_sync')
         toolkit.add_ckan_admin_tab(
-            config_, 'drupal_menu_sync_admin', 'Manage Menu sync'
+            config_, 'drupal_menu_sync.manage_cache', 'Manage Menu sync'
         )
 
     # ITemplateHelpers
     def get_helpers(self):
-        return {
-            'menu_links': menu_links
-        }
+        return helpers()
