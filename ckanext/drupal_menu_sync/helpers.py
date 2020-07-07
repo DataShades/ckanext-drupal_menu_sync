@@ -46,6 +46,8 @@ def menu_links(section=None):
         if section in menus:
             if section == 'main':
                 return menus['main'][0]
+            elif section == 'mobile':
+                return menus['mobile'][0]
             else: 
                 section_menu.extend(menus[section])
                 return section_menu

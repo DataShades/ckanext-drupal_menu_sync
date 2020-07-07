@@ -14,10 +14,11 @@
                     {{ super() }}
                 {% endblock %}
             </hgroup>
-
                 {% set header_menu = h.menu_links('main') %}
-                {% if header_menu != None  %}
+                {% set mobile_menu = h.menu_links('mobile') %}
+                {% if header_menu != None and mobile_menu != None %}
                     {{ header_menu|safe }}
+                    {{ mobile_menu|safe }}
                 {% else %}
                     <div class="nav-collapse collapse">
                         <nav class="section navigation">
@@ -33,12 +34,10 @@
                             </ul>
                         </nav>
                     </div>
-
                 {% endif %}
-            </div>
-            {% block header_site_search %}
-                {{ super() }}
-            {% endblock %}
         </div>
+        {% block header_site_search %}
+            {{ super() }}
+        {% endblock %}
     </header>
 {% endblock %}
