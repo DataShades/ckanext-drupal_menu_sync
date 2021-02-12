@@ -3,8 +3,8 @@ from ckantoolkit import config
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
 
-from ckanext.drupal_menu_sync.views import blueprints
-from ckanext.drupal_menu_sync.helpers import helpers
+from ckanext.drupal_menu_sync.views import get_blueprints
+from ckanext.drupal_menu_sync.helpers import get_helpers
 
 
 class Drupal_Menu_SyncPlugin(plugins.SingletonPlugin):
@@ -15,7 +15,7 @@ class Drupal_Menu_SyncPlugin(plugins.SingletonPlugin):
 
     # IBlueprint
     def get_blueprint(self):
-        return blueprints
+        return get_blueprints()
 
     # IConfigurer
     def update_config(self, config_):
@@ -28,4 +28,4 @@ class Drupal_Menu_SyncPlugin(plugins.SingletonPlugin):
 
     # ITemplateHelpers
     def get_helpers(self):
-        return helpers()
+        return get_helpers()
