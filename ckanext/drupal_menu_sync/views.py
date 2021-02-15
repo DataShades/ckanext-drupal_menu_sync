@@ -18,7 +18,7 @@ def manage_cache():
         return render('admin/manage_cache.html')
     else:
         if 'clear-main-menu-cache' in request.form:
-            cache.invalidate(get_header_menu, 'header_menu', 'mobile')
+            cache.invalidate(get_header_menu, 'header_menu')
             cache.invalidate(get_footer_menu, 'footer_menu')
         return h.redirect_to('drupal_menu_sync.manage_cache')
 
