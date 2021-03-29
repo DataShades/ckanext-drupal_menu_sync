@@ -14,25 +14,23 @@
                     {{ super() }}
                 {% endblock %}
             </hgroup>
-                {% set header_menu = h.menu_links('main') %}
-                {% set mobile_menu = h.menu_links('mobile') %}
-                {% if header_menu != None and mobile_menu != None %}
+                {% set header_menu = h.get_header_menu() %}
+                {% set mobile_menu = h.get_header_menu('mobile') %}
+
+                {% if header_menu and mobile_menu %}
                     {{ header_menu|safe }}
                     {{ mobile_menu|safe }}
                 {% else %}
-                    <div class="nav-collapse collapse">
-                        <nav class="section navigation">
-                            <ul class="nav nav-pills">
-                                {% block header_site_navigation_tabs %}
-                                    {{ h.build_nav_main(
-                                        ('search', _('Datasets')),
-                                        ('organizations_index', _('Organizations')),
-                                        ('group_index', _('Groups')),
-                                        ('about', _('About'))
-                                    ) }}
-                                {% endblock %}
-                            </ul>
-                        </nav>
+                    <div class="container">
+                        <div class="collapse navbar-collapse" id="main-navigation-toggle">
+                            <nav class="section navigation">
+                                <ul class="nav nav-pills">
+                                    {% block header_site_navigation_tabs %}
+                                        {{ super()}}
+                                    {% endblock %}
+                                </ul>
+                            </nav>
+                        </div>
                     </div>
                 {% endif %}
         </div>
